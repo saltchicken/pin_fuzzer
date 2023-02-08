@@ -79,7 +79,6 @@ def read_input_loop():
     for i, bit in enumerate(input):
         if i > 7:
             break
-        print(i)
         if bit == "1":
             inputGrid[i].configure(bg_color="yellow")
         else:

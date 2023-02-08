@@ -26,5 +26,5 @@ void loop() {
     Serial.print(inputState);
   }
   Serial.println(""); 
-  delay(100);
+  delay(500);
 }
