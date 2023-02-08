@@ -58,11 +58,14 @@ def create_func(i):
 global state
 state = [False, False, False, False, False, False, False, False]; 
 
+inputGrid = [customtkinter.CTkLabel(frame, text=f"{i+1}", width=30, height=10, bg_color="blue") for i in range(8)]
+
 for i in range(8):
     callback = create_func(i)
     button = customtkinter.CTkLabel(frame, text=f"{i+1}", width=30, height=10, bg_color="green")
     button.bind("<Button-1>", callback)
     button.grid(row=1, column=i)
+    inputGrid[i].grid(row=2, column=i)
 
 # checkbox = customtkinter.CTkCheckBox(master=frame, text="Check me")
 # checkbox.pack(pady=12, padx=10)
@@ -72,7 +75,16 @@ thread = threading.Thread(target=serial_loop, args=(stop_event,))
 thread.start()
 def read_input_loop():
     input = read_input_queue.get()
-    print("Update GUI with: ", input)
+    # TODO This is embarassing
+    for i, bit in enumerate(input):
+        if i > 7:
+            break
+        print(i)
+        if bit == "1":
+            inputGrid[i].configure(bg_color="yellow")
+        else:
+            inputGrid[i].configure(bg_color="blue")
+
     root.after(10, read_input_loop)
 read_input_loop()
 
